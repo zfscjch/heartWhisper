@@ -1,9 +1,3 @@
-<<<<<<< HEAD
 flask>=3.1.3
 python-docx>=1.2.0
 gevent>=26.8.0
-=======
-flask>=3.1.3
-python-docx>=1.2.0
-gevent>=26.8.0
->>>>>>> 550ddc05bb1e893b4a2965411c77932763787ec1
