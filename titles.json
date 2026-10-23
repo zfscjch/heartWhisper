@@ -1,0 +1,47 @@
+[
+    [
+      { "question_text": "我感到情绪低落、沮丧或绝望。", "is_reverse_scored": false },
+      { "question_text": "我对平时感兴趣的事情失去了兴趣或乐趣（觉得干什么都没意思）。", "is_reverse_scored": false },
+      { "question_text": "我感到紧张、焦虑、心神不宁。", "is_reverse_scored": false },
+      { "question_text": "我容易因为小事而发脾气、感到烦躁或愤怒。", "is_reverse_scored": false },
+      { "question_text": "我感到害怕，好像会有不好的事情发生。", "is_reverse_scored": false },
+      { "question_text": "我会无缘无故地感到想哭或悲伤。", "is_reverse_scored": false },
+      { "question_text": "我觉得自己很没用，或者是个失败者。", "is_reverse_scored": false },
+      { "question_text": "我觉得自己的生活毫无希望。", "is_reverse_scored": false }
+    ],
+    [
+      { "question_text": "我入睡困难，躺在床上很久都无法睡着。", "is_reverse_scored": false },
+      { "question_text": "我半夜容易醒来，或者醒得太早且无法再次入睡。", "is_reverse_scored": false },
+      { "question_text": "尽管睡了一觉，我早上醒来依然感到非常疲惫。", "is_reverse_scored": false },
+      { "question_text": "我的食欲发生明显变化（吃得太多或太少）。", "is_reverse_scored": false },
+      { "question_text": "我经常感到头痛、胃痛、胸闷或肌肉酸痛，但找不到明确的生理原因。", "is_reverse_scored": false },
+      { "question_text": "我感到精力不足，做日常小事也觉得很吃力。", "is_reverse_scored": false },
+      { "question_text": "我的心跳经常莫名其妙地加快，或者感到呼吸急促。", "is_reverse_scored": false }
+    ],
+    [
+      { "question_text": "我很难集中注意力去完成手头的工作、学习或阅读。", "is_reverse_scored": false },
+      { "question_text": "我经常忘事（比如忘记带钥匙、忘记刚刚要做的事情）。", "is_reverse_scored": false },
+      { "question_text": "我发现自己很难做出决定，哪怕是简单的决定。", "is_reverse_scored": false },
+      { "question_text": "我经常因为脑海中反复出现的想法而感到困扰。", "is_reverse_scored": false },
+      { "question_text": "我觉得自己的脑子变慢了，反应不如以前灵敏。", "is_reverse_scored": false },
+      { "question_text": "我对自己的外貌和能力感到满意。", "is_reverse_scored": true }
+    ],
+    [
+      { "question_text": "我感到孤独，即使身边有人陪伴也是如此。", "is_reverse_scored": false },
+      { "question_text": "我尽量避免参加社交活动，或者害怕在人群中表现自己。", "is_reverse_scored": false },
+      { "question_text": "我觉得周围的人都不理解我，或者没有人能真正懂我。", "is_reverse_scored": false },
+      { "question_text": "当我遇到困难时，我能找到可以倾诉或寻求帮助的人。", "is_reverse_scored": true },
+      { "question_text": "我的人际关系（如家人、朋友、同事/同学）让我感到有压力。", "is_reverse_scored": false },
+      { "question_text": "我害怕与人发生冲突，经常为了迎合别人而委屈自己。", "is_reverse_scored": false },
+      { "question_text": "我发现自己很难对别人敞开心扉。", "is_reverse_scored": false }
+    ],
+    [
+      { "question_text": "面对生活中的突发变化，我能较快地调整心态。", "is_reverse_scored": true },
+      { "question_text": "我有健康的放松方式（如运动、听音乐、冥想等）来缓解压力。", "is_reverse_scored": true },
+      { "question_text": "我经常使用吸烟、喝酒、暴饮暴食或过度玩游戏来麻痹自己或缓解压力。", "is_reverse_scored": false },
+      { "question_text": "我感到自己无法掌控生活中的重要事情。", "is_reverse_scored": false },
+      { "question_text": "我感到压力大到快要承受不住了。", "is_reverse_scored": false },
+      { "question_text": "我对目前的生活状态总体感到满意。", "is_reverse_scored": true },
+      { "question_text": "我认为自己是一个有价值的人，能发现自己的优点。", "is_reverse_scored": true }
+    ]
+]
