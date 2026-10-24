@@ -3,6 +3,8 @@ import random
 import uuid
 import os
 from docx import Document
+from docx.shared import Pt
+from docx.oxml.ns import qn
 
 
 def load_data() -> dict[str, str | list]:
@@ -89,6 +91,15 @@ def generate_word() -> str:
             question_num += 1
 
     doc.add_paragraph(data["end"])
+    
+    # 修改字体
+    style = doc.styles["Normal"]
+    font = style.font
+
+    font.name = "Times New Roman"
+    font.size = Pt(12)
+
+    style._element.rPr.rFonts.set(qn('w:eastAsia'), "宋体")
 
     file_name = str(uuid.uuid4())[:8] + ".docx"
     file_path = os.path.join("doc", file_name)
