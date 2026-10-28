@@ -6,85 +6,59 @@ from docx import Document
 from docx.shared import Pt
 from docx.oxml.ns import qn
 
+# 定义数据和模板目录
+DATA_DIR = "data"
 
-def load_data() -> dict[str, str | list]:
-    """加载测试数据。
-
-    从 ``paper_example.txt`` 中读取问卷的开头提示与结尾提示
-    （以 ``---\\n`` 分隔），并从 ``titles.json`` 中读取题目列表。
-
-    Returns:
-        dict[str, str | list]: 包含以下键的字典：
-
-        - ``"head"`` (str): 问卷开头的提示文本。
-        - ``"end"`` (str): 问卷结尾的提示文本。
-        - ``"problems"`` (list): 题目列表。
-
-    Raises:
-        FileNotFoundError: 当 ``paper_example.txt`` 或 ``titles.json`` 不存在时。
-        ValueError: 当 ``paper_example.txt`` 中不包含 ``---\\n`` 分隔符时。
-        json.JSONDecodeError: 当 ``titles.json`` 不是合法的 JSON 时。
-
-    Examples:
-        >>> res = load_data()
-        >>> res["head"]
-        '...'
-    """
-    with open("./paper_example.txt", "r", encoding="utf-8") as rf:
+def load_data(q_type: str = "抗抑郁型") -> dict[str, str | list]:
+    """加载测试数据，根据问卷类型动态加载。"""
+    os.makedirs(DATA_DIR, exist_ok=True)
+    
+    # 1. 加载首尾提示语（如果存在该类型的专属提示语则使用，否则用默认的）
+    paper_file = os.path.join(DATA_DIR, f"{q_type}_paper.txt")
+    if not os.path.exists(paper_file):
+        paper_file = "paper_example.txt" # 默认抑郁型首尾语
+        
+    with open(paper_file, "r", encoding="utf-8") as rf:
         paper_hint = rf.read()
-
+    
+    if "---\n" not in paper_hint:
+        raise ValueError(f"文件 {paper_file} 中不包含 `---\\n` 分隔符")
     head_hint, finish_hint = paper_hint.split("---\n")
 
-    with open("titles.json", "r", encoding="utf-8") as jf:
+    # 2. 加载题库（如果该类型题库存在则读取，否则读取默认 titles.json）
+    question_file = os.path.join(DATA_DIR, f"{q_type}.json")
+    if not os.path.exists(question_file):
+        question_file = "titles.json" # 默认抑郁型题库
+        
+    with open(question_file, "r", encoding="utf-8") as jf:
         questions = json.load(jf)
 
-    res = {
+    return {
         "head": head_hint,
         "end": finish_hint,
         "problems": questions
     }
 
-    return res
-
-
-def generate_word() -> str:
-    """生成一份随机的心理调查问卷 Word 文档。
-
-    从 :func:`load_data` 加载数据，随机抽取题目（每组最多 2 道，
-    最多 5 组），将题目连同开头、结尾提示写入 docx 文档，
-    并保存到 ``doc/`` 目录下（目录不存在时自动创建）。
-    文件名为随机生成的 8 位十六进制字符串加 ``.docx`` 后缀。
-
-    Returns:
-        str: 生成的文件名（不含目录路径），例如 ``"a1b2c3d4.docx"``。
-
-    Raises:
-        FileNotFoundError: 当所需数据文件不存在时（由 :func:`load_data` 抛出）。
-        ValueError: 当数据文件格式不正确时（由 :func:`load_data` 抛出）。
-
-    Examples:
-        >>> file_name = generate_word()
-        >>> file_name.endswith(".docx")
-        True
-    """
+def generate_word(q_type: str = "抗抑郁型") -> str:
+    """生成一份随机的心理调查问卷 Word 文档。"""
     doc = Document()
-    doc.add_heading("心理调查问卷", level=1)
+    doc.add_heading(f"{q_type}调查问卷", level=1)
 
-    data = load_data()
+    data = load_data(q_type)
     doc.add_paragraph(data["head"])
 
     problems = data["problems"]
     os.makedirs("doc", exist_ok=True)
 
     question_num = 1
-
-    for i in range(5):
-        num_to_pick = min(2, len(problems[i]))
-        selected_problems = random.sample(problems[i], num_to_pick)
+    # 去掉原来的 range(5) 限制，动态遍历所有组，防止非抑郁类题目组数不同报错
+    for group in problems:
+        num_to_pick = min(2, len(group))
+        selected_problems = random.sample(group, num_to_pick)
 
         for problem in selected_problems:
             text = f"{question_num}. "
-            if problem["is_reverse_scored"]:
+            if problem.get("is_reverse_scored", False):
                 text += "【本题需要反向评分】"
             text += problem["question_text"]
             doc.add_paragraph(text)
@@ -95,10 +69,8 @@ def generate_word() -> str:
     # 修改字体
     style = doc.styles["Normal"]
     font = style.font
-
     font.name = "Times New Roman"
     font.size = Pt(12)
-
     style._element.rPr.rFonts.set(qn('w:eastAsia'), "宋体")
 
     file_name = str(uuid.uuid4())[:8] + ".docx"
